@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  path_provider: ^2.0.2
   draw_on_image_plugin:
     # When depending on this package from a real application you should use:
     #   draw_on_image_plugin: ^x.y.z

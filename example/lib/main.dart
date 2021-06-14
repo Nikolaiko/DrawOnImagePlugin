@@ -1,4 +1,6 @@
-import 'dart:ui' as ui;
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:draw_on_image_plugin/model/write_image_data.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:draw_on_image_plugin/draw_on_image_plugin.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,13 +20,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final DrawOnImagePlugin _plugin = DrawOnImagePlugin();
+  DrawOnImagePlugin _plugin = DrawOnImagePlugin();  
 
-  Future<void> _initPlatformState() async {
+  Future<String> _initPlatformState() async {    
     ByteData imageBytes = await rootBundle.load("assets/images/test_image.png");
-    _plugin.writeTextOnImage(
-      WriteImageData("Some text", imageBytes)
-    );
+    print(Colors.red.value);
+    String fileName = await _plugin.writeTextOnImage(
+      WriteImageData(
+        "Are you insane fucking serious\nrerereredfdffdfd\nfgdfdfdfdfdfdf\nHHHHASASASSADFDFDFFGF\nsdsddssddssddssdsd!!!!", 
+        imageBytes,
+        left: 200,
+        right: 200,
+        top: 200,
+        bottom: 200,
+        color: Colors.red.value,
+        fontSize: 80
+      ));
+    Directory dir = await getApplicationDocumentsDirectory();
+    String filePath = "${dir.path}/$fileName";
+    return filePath;
   }
 
   @override
@@ -33,11 +48,11 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: FutureBuilder(
+        body: FutureBuilder<String>(
           future: _initPlatformState(),
           builder: (futureContext, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return _buildMainScreen();
+              return _buildMainScreen(snapshot.data);
             } else {
               return CircularProgressIndicator();
             }
@@ -47,10 +62,10 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _buildMainScreen() {
-    return Center(
-      child: Image.asset("assets/images/test_image.png"),
+  Widget _buildMainScreen(String bytes) {
+    return Container(
+      color: Colors.red,      
+      child: Image.file(File(bytes))
     );
   }
-
 }
