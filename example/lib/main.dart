@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:draw_on_image_plugin/model/write_image_data.dart';
+import 'package:draw_on_image_plugin_example/draw_options_dialog.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -11,7 +12,9 @@ import 'package:draw_on_image_plugin/draw_on_image_plugin.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -52,7 +55,7 @@ class _MyAppState extends State<MyApp> {
           future: _initPlatformState(),
           builder: (futureContext, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return _buildMainScreen(snapshot.data);
+              return _buildMainScreen(context, snapshot.data!);
             } else {
               return CircularProgressIndicator();
             }
@@ -62,10 +65,43 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _buildMainScreen(String bytes) {
+  Widget _buildMainScreen(BuildContext context, String bytes) {
     return Container(
       color: Colors.red,      
-      child: Image.file(File(bytes))
+      child: Column(        
+        children: [
+          Image.file(File(bytes)),
+          ElevatedButton(
+            onPressed: () => _showMyDialog(context), 
+            child: Container(
+              color: Colors.blue,
+              padding: const EdgeInsets.all(10.0),
+              child: const Text("Draw"),
+            )
+          )
+        ]
+      )            
+    );
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Draw parameters'),
+          content: DrawOptionsDialog(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Try to Draw'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
