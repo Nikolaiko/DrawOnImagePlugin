@@ -51,7 +51,26 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: FutureBuilder<String>(
+        body: Container(
+          child: ElevatedButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DrawOptionsDialog()
+              )
+            ), 
+            child: Container(
+              color: Colors.blue,
+              padding: const EdgeInsets.all(10.0),
+              child: const Text("Draw"),
+            )
+          ),
+        )
+      ),
+    );
+  }
+
+  /*
+  FutureBuilder<String>(
           future: _initPlatformState(),
           builder: (futureContext, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -61,9 +80,7 @@ class _MyAppState extends State<MyApp> {
             }
           }
         )
-      ),
-    );
-  }
+  */
 
   Widget _buildMainScreen(BuildContext context, String bytes) {
     return Container(
@@ -72,7 +89,11 @@ class _MyAppState extends State<MyApp> {
         children: [
           Image.file(File(bytes)),
           ElevatedButton(
-            onPressed: () => _showMyDialog(context), 
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DrawOptionsDialog()
+              )
+            ), 
             child: Container(
               color: Colors.blue,
               padding: const EdgeInsets.all(10.0),
@@ -81,27 +102,6 @@ class _MyAppState extends State<MyApp> {
           )
         ]
       )            
-    );
-  }
-
-  Future<void> _showMyDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Draw parameters'),
-          content: DrawOptionsDialog(),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Try to Draw'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
