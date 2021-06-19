@@ -2,7 +2,7 @@ struct FileHelper {
     func saveImageToDocuments(image: UIImage) -> String? {
         guard let documentsDirectory =
                 FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil}
-        let fileName = "image001.png"
+        let fileName = "\(String.randomString(length: 5)).png"
         let fileURL = documentsDirectory.appendingPathComponent(fileName)        
         
         if FileManager.default.fileExists(atPath: fileURL.path) {

@@ -12,7 +12,6 @@ public class SwiftDrawOnImagePlugin: NSObject, FlutterPlugin {
             codec: DrawOnImageMethodCodec()
         )
         let instance = SwiftDrawOnImagePlugin()
-        
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 

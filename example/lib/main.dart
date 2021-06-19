@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:draw_on_image_plugin/model/write_image_data.dart';
 import 'package:draw_on_image_plugin_example/draw_options_dialog.dart';
+import 'package:draw_on_image_plugin_example/model/basic_draw_parameters.dart';
+import 'package:draw_on_image_plugin_example/model/screen_dimensions.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -23,85 +25,82 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DrawOnImagePlugin _plugin = DrawOnImagePlugin();  
+  DrawOnImagePlugin _plugin = DrawOnImagePlugin(); 
+  String? _pathToNewFile; 
 
-  Future<String> _initPlatformState() async {    
-    ByteData imageBytes = await rootBundle.load("assets/images/test_image.png");
-    print(Colors.red.value);
+  Future<void> _sendPluginRequest(BasicDrawParameters params) async {    
+    ByteData imageBytes = await rootBundle.load("assets/images/test_image.png");    
     String fileName = await _plugin.writeTextOnImage(
       WriteImageData(
-        "Are you insane fucking serious\nrerereredfdffdfd\nfgdfdfdfdfdfdf\nHHHHASASASSADFDFDFFGF\nsdsddssddssddssdsd!!!!", 
+        params.text, 
         imageBytes,
-        left: 200,
-        right: 200,
-        top: 200,
-        bottom: 200,
-        color: Colors.red.value,
-        fontSize: 80
+        left: params.left,
+        right: params.right,
+        top: params.top,
+        bottom: params.bottom,
+        color: params.color.value,
+        fontSize: params.size
       ));
-    Directory dir = await getApplicationDocumentsDirectory();
-    String filePath = "${dir.path}/$fileName";
-    return filePath;
+
+    setState(() {
+      _pathToNewFile = fileName;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    var dimensions = ScreenDimensions(context);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Container(
-          child: ElevatedButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DrawOptionsDialog()
-              )
-            ), 
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(10.0),
-              child: const Text("Draw"),
-            )
-          ),
+        body: Column(
+          children: [
+            Container(
+              width: dimensions.width,
+              height: dimensions.withoutSafeAreaHeight * 0.75,              
+              child: _pathToNewFile == null
+                ? _buildInitialScreen()
+                : _buildMainScreen(),
+            ),
+            _buildButton()
+          ]
         )
       ),
     );
   }
 
-  /*
-  FutureBuilder<String>(
-          future: _initPlatformState(),
-          builder: (futureContext, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return _buildMainScreen(context, snapshot.data!);
-            } else {
-              return CircularProgressIndicator();
-            }
-          }
-        )
-  */
-
-  Widget _buildMainScreen(BuildContext context, String bytes) {
-    return Container(
-      color: Colors.red,      
-      child: Column(        
-        children: [
-          Image.file(File(bytes)),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DrawOptionsDialog()
-              )
-            ), 
-            child: Container(
-              color: Colors.blue,
-              padding: const EdgeInsets.all(10.0),
-              child: const Text("Draw"),
-            )
+  Widget _buildButton() {    
+    return ElevatedButton(
+      onPressed: () async {
+        _pathToNewFile = null;
+        BasicDrawParameters params = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DrawOptionsDialog()
           )
-        ]
-      )            
+        );
+        _sendPluginRequest(params);
+      }, 
+      child: Container(
+        color: Colors.blue,
+        padding: const EdgeInsets.all(10.0),
+        child: const Text("Draw"),
+      )
+    );
+  }
+  
+  Widget _buildInitialScreen() {
+    return Image.asset(
+      "assets/images/test_image.png",
+      fit: BoxFit.contain
+    );
+  }
+
+  Widget _buildMainScreen() {
+    return Image.file(
+      File(_pathToNewFile ?? ""),
+      fit: BoxFit.contain
     );
   }
 }

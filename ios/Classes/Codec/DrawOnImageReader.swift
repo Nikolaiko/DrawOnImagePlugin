@@ -10,7 +10,6 @@ class DrawOnImageReader : FlutterStandardReader {
             let color = super.readValue() as! NSNumber
             let size = super.readValue() as! NSNumber
             let imageCanvas = super.readValue() as! FlutterStandardTypedData
-            print(color.intValue)
             return DrawOnImageData(
                 stringToWrite: stringToWrite,
                 leftPadding: left.intValue,
