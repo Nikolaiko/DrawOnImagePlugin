@@ -5,10 +5,6 @@ final class DrawOnImageMethodCodec : NSObject, FlutterMethodCodec {
         Self()
     }
     
-    func encode(_ methodCall: FlutterMethodCall) -> Data {
-        return Data()
-    }
-    
     func decodeMethodCall(_ methodCall: Data) -> FlutterMethodCall {
         let reader = DrawOnImageReader(data: methodCall)
         let methodName = reader.readValue() as! String
@@ -39,6 +35,10 @@ final class DrawOnImageMethodCodec : NSObject, FlutterMethodCodec {
         writer.writeValue("No details")
         
         return buffer.copy() as! Data
+    }
+    
+    func encode(_ methodCall: FlutterMethodCall) -> Data {
+        return Data()
     }
     
     func decodeEnvelope(_ envelope: Data) -> Any? {

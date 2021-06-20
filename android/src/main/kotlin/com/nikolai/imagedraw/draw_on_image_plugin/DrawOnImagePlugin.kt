@@ -1,36 +1,51 @@
 package com.nikolai.imagedraw.draw_on_image_plugin
 
 import androidx.annotation.NonNull
+import com.nikolai.imagedraw.draw_on_image_plugin.codec.DrawOnImageCodec
+import com.nikolai.imagedraw.draw_on_image_plugin.helpers.ImageHelper
+import com.nikolai.imagedraw.draw_on_image_plugin.model.DrawOnImageData
+import com.nikolai.imagedraw.draw_on_image_plugin.utils.CHANNEL_NAME
+import com.nikolai.imagedraw.draw_on_image_plugin.utils.DRAW_METHOD_NAME
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
+import java.io.File
 
-/** DrawOnImagePlugin */
 class DrawOnImagePlugin: FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
-  private lateinit var channel : MethodChannel
+    private lateinit var channel : MethodChannel
+    private lateinit var imageHelper: ImageHelper
 
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "draw_on_image_plugin")
-    channel.setMethodCallHandler(this)
-  }
-
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        imageHelper = ImageHelper(flutterPluginBinding.applicationContext.dataDir)
+        channel = MethodChannel(
+                flutterPluginBinding.binaryMessenger,
+                CHANNEL_NAME,
+                DrawOnImageCodec()
+        )
+        channel.setMethodCallHandler(this)
     }
-  }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    channel.setMethodCallHandler(null)
-  }
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        when (call.method) {
+            DRAW_METHOD_NAME -> {
+                when(call.arguments is DrawOnImageData) {
+                    true -> {
+                        imageHelper.drawOnImage(call.arguments as DrawOnImageData)
+                        result.success("Android ${android.os.Build.VERSION.RELEASE}")
+                    }
+                    false -> {
+
+                    }
+                }
+            }
+            else -> result.notImplemented()
+        }
+    }
+
+    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+        channel.setMethodCallHandler(null)
+    }
 }
