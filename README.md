@@ -27,5 +27,6 @@ After that just pass that data to plugin:
 String path = await _plugin.writeTextOnImage(writeData);
 ```
 You will receive a path to new image with your text above it.
+Your code is responsible for managing (move, rename, delete) the newly created file.
 
 More details in [example](https://github.com/Nikolaiko/DrawOnImagePlugin/tree/main/example).
