@@ -1,15 +1,31 @@
 # draw_on_image_plugin
 
-A new flutter plugin project.
+Flutter plugin for drawing text on images. 
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Just create plugin instance
+```dart
+DrawOnImagePlugin _plugin = DrawOnImagePlugin();
+```
+Then create data class with draw parameters like font size, padding, color and so on:
+```dart
+var writeData = WriteImageData(
+  text, 
+  imageBytes,
+  left: left,
+  right: right,
+  top: top,
+  bottom: bottom,
+  color: color.value,
+  fontSize: size
+)
+```
+Only two paramaters : text and imageBytes are required the rest are optional.
+After that just pass that data to plugin:
+```dart
+String path = await _plugin.writeTextOnImage(writeData);
+```
+You will receive a path to new image with your text above it.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+More details in [example](https://github.com/Nikolaiko/DrawOnImagePlugin/tree/main/example).
