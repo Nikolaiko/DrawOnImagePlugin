@@ -6,6 +6,8 @@ import com.nikolai.imagedraw.draw_on_image_plugin.helpers.ImageHelper
 import com.nikolai.imagedraw.draw_on_image_plugin.model.DrawOnImageData
 import com.nikolai.imagedraw.draw_on_image_plugin.utils.CHANNEL_NAME
 import com.nikolai.imagedraw.draw_on_image_plugin.utils.DRAW_METHOD_NAME
+import com.nikolai.imagedraw.draw_on_image_plugin.utils.errorMessages
+import com.nikolai.imagedraw.draw_on_image_plugin.utils.wrongParameterType
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -33,11 +35,11 @@ class DrawOnImagePlugin: FlutterPlugin, MethodCallHandler {
             DRAW_METHOD_NAME -> {
                 when(call.arguments is DrawOnImageData) {
                     true -> {
-                        imageHelper.drawOnImage(call.arguments as DrawOnImageData)
-                        result.success("Android ${android.os.Build.VERSION.RELEASE}")
+                        val fileName = imageHelper.drawOnImage(call.arguments as DrawOnImageData)
+                        result.success(fileName)
                     }
                     false -> {
-
+                        result.error(wrongParameterType, errorMessages[wrongParameterType], null)
                     }
                 }
             }

@@ -13,19 +13,18 @@ class ImageHelper(
 ) {
 
     fun drawOnImage(data: DrawOnImageData): String {
-        //val stream = assetsManager.open(imageNames[imageIndex])
-
-        val newImgFile = File("${filesDirectory.path}/app_flutter/test.png")
-        if (newImgFile.exists()) {
-            newImgFile.delete()
+        val flutterDirectory = File("${filesDirectory.path}/app_flutter")
+        val fileName = File.createTempFile("android", "drawn", flutterDirectory)
+        if (fileName.exists()) {
+            fileName.delete()
         }
-        val out = FileOutputStream(newImgFile)
+        val out = FileOutputStream(fileName)
 
         val initialBitmap = BitmapFactory.decodeByteArray(data.imageCanvas, 0, data.imageCanvas.size)
         val copyBitmap = initialBitmap.copy(Bitmap.Config.ARGB_8888, true)
 
         val paint = Paint()
-        paint.color = Color.WHITE
+        paint.color = data.color
         paint.textSize = data.size.toFloat()
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
 
@@ -59,6 +58,6 @@ class ImageHelper(
         out.flush()
         out.close()
 
-        return newImgFile.absolutePath
+        return fileName.name
     }
 }

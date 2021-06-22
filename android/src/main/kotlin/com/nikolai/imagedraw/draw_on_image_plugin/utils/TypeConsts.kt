@@ -8,3 +8,5 @@ const val STRING_DATA_TYPE: Byte = 7
 const val INT_DATA_TYPE: Byte = 3
 
 const val SUCCESS_ENVELOPE_CODE: Byte = 0
+const val ERROR_ENVELOPE_CODE: Byte = 1
+const val STACKTRACE_ERROR_ENVELOPE_CODE: Byte = 2
