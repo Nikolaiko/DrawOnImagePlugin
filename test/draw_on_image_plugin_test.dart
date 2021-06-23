@@ -1,7 +1,6 @@
-import 'package:draw_on_image_plugin/consts/name_constst.dart';
+import 'package:draw_on_image_plugin/src/consts/name_constst.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:draw_on_image_plugin/draw_on_image_plugin.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel(channelName);

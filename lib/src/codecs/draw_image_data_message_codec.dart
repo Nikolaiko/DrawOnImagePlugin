@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:draw_on_image_plugin/consts/type_consts.dart';
-import 'package:draw_on_image_plugin/model/write_image_data.dart';
+import 'package:draw_on_image_plugin/src/consts/type_consts.dart';
+import 'package:draw_on_image_plugin/src/model/write_image_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

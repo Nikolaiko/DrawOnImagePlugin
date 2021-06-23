@@ -33,6 +33,10 @@ android {
     defaultConfig {
         minSdkVersion 26
     }
+
+    dependencies {
+        compileOnly rootProject.findProject(":path_provider")
+    }
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-import 'package:draw_on_image_plugin/consts/default_values_consts.dart';
+import 'package:draw_on_image_plugin/src/consts/default_values_consts.dart';
 import 'package:flutter/services.dart';
 
 class WriteImageData {  

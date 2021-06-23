@@ -1,5 +1,5 @@
-import 'package:draw_on_image_plugin/codecs/draw_image_data_message_codec.dart';
-import 'package:draw_on_image_plugin/consts/type_consts.dart';
+import 'package:draw_on_image_plugin/src/codecs/draw_image_data_message_codec.dart';
+import 'package:draw_on_image_plugin/src/consts/type_consts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

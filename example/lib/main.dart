@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:draw_on_image_plugin/model/write_image_data.dart';
+import 'package:draw_on_image_plugin/draw_on_image_plugin.dart';
 import 'package:draw_on_image_plugin_example/draw_options_dialog.dart';
 import 'package:draw_on_image_plugin_example/model/basic_draw_parameters.dart';
 import 'package:draw_on_image_plugin_example/model/screen_dimensions.dart';
@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:draw_on_image_plugin/draw_on_image_plugin.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -25,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DrawOnImagePlugin _plugin = DrawOnImagePlugin(); 
+  DrawOnImage _plugin = DrawOnImage(); 
   String? _pathToNewFile; 
 
   Future<void> _sendPluginRequest(BasicDrawParameters params) async {    
