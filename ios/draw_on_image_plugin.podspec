@@ -1,11 +1,8 @@
 Pod::Spec.new do |s|
   s.name             = 'draw_on_image_plugin'
-  s.version          = '1.0.0'
-  s.summary          = 'A new flutter plugin project.'
-  s.description      = <<-DESC
-A new flutter plugin project.
-                       DESC
-  s.homepage         = 'http://example.com'
+  s.version          = '0.1.0'
+  s.summary          = 'Flutter plugin for drawing text on images.'
+  s.description      = 'Flutter plugin for drawing text on images.'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Nikolai' => 'nikolaiko@mail.ru' }
   s.source           = { :path => '.' }
