@@ -9,8 +9,8 @@ import java.nio.ByteBuffer
 class DrawOnImageCodec : MethodCodec {
     private val reader = DrawOnImageReader()
 
-    override fun decodeMethodCall(methodCall: ByteBuffer?): MethodCall {
-        val type = methodCall?.get() ?: 0
+    override fun decodeMethodCall(methodCall: ByteBuffer): MethodCall {
+        val type = methodCall.get()
         val methodName = reader.readValueOfType(type, methodCall) as String
         val arguments = reader.decodeMessage(methodCall)
         return MethodCall(methodName, arguments)
@@ -25,7 +25,7 @@ class DrawOnImageCodec : MethodCodec {
                 .put(buffer)
     }
 
-    override fun encodeErrorEnvelope(errorCode: String?, errorMessage: String?, errorDetails: Any?): ByteBuffer {
+    override fun encodeErrorEnvelope(errorCode: String, errorMessage: String?, errorDetails: Any?): ByteBuffer {
         val code: String = errorCode ?: unknownErrorCode
         val errorCodeBuffer = code.toByteArray(Charsets.UTF_8)
 
@@ -45,13 +45,13 @@ class DrawOnImageCodec : MethodCodec {
         return errorBuffer
     }
 
-    override fun encodeErrorEnvelopeWithStacktrace(errorCode: String?, errorMessage: String?, errorDetails: Any?, errorStacktrace: String?): ByteBuffer {
+    override fun encodeErrorEnvelopeWithStacktrace(errorCode: String, errorMessage: String?, errorDetails: Any?, errorStacktrace: String?): ByteBuffer {
         return encodeErrorEnvelope(errorCode, errorMessage, errorDetails)
     }
 
-    override fun encodeMethodCall(methodCall: MethodCall?): ByteBuffer {
+    override fun encodeMethodCall(methodCall: MethodCall): ByteBuffer {
         TODO("Not yet implemented")
     }
 
-    override fun decodeEnvelope(envelope: ByteBuffer?) = Any()
+    override fun decodeEnvelope(envelope: ByteBuffer) = Any()
 }

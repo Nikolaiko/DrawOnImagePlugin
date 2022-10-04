@@ -6,8 +6,7 @@ import io.flutter.plugin.common.StandardMessageCodec
 import java.nio.ByteBuffer
 
 class DrawOnImageReader : StandardMessageCodec() {
-    public override fun readValueOfType(type: Byte, buffer: ByteBuffer?): Any {
-        println("It's type : $type")
+    public override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
         return when (type) {
             DRAW_ON_IMAGE_DATA_TYPE -> {
                 val text = super.readValue(buffer) as String

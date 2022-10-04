@@ -1,6 +1,6 @@
 name: draw_on_image_plugin
 description: Flutter plugin for drawing text on images.
-version: 0.1.0
+version: 1.0.0
 repository: https://github.com/Nikolaiko/DrawOnImagePlugin
 
 environment:
@@ -9,9 +9,7 @@ environment:
 
 dependencies:
   flutter:
-    sdk: flutter
-        
-  path_provider: ^2.0.2
+    sdk: flutter    
 
 dev_dependencies:
   flutter_test:

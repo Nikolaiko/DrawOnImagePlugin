@@ -1,26 +1,28 @@
 package com.nikolai.imagedraw.draw_on_image_plugin
 
+import android.app.Application
+import android.content.Context
 import androidx.annotation.NonNull
 import com.nikolai.imagedraw.draw_on_image_plugin.codec.DrawOnImageCodec
 import com.nikolai.imagedraw.draw_on_image_plugin.helpers.ImageHelper
 import com.nikolai.imagedraw.draw_on_image_plugin.model.DrawOnImageData
-import com.nikolai.imagedraw.draw_on_image_plugin.utils.CHANNEL_NAME
-import com.nikolai.imagedraw.draw_on_image_plugin.utils.DRAW_METHOD_NAME
-import com.nikolai.imagedraw.draw_on_image_plugin.utils.errorMessages
-import com.nikolai.imagedraw.draw_on_image_plugin.utils.wrongParameterType
+import com.nikolai.imagedraw.draw_on_image_plugin.utils.*
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.util.PathUtils
 import java.io.File
 
 class DrawOnImagePlugin: FlutterPlugin, MethodCallHandler {
     private lateinit var channel : MethodChannel
     private lateinit var imageHelper: ImageHelper
+    private lateinit var appContext: Context
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        appContext = flutterPluginBinding.applicationContext
         imageHelper = ImageHelper(flutterPluginBinding.applicationContext.dataDir)
         channel = MethodChannel(
                 flutterPluginBinding.binaryMessenger,
@@ -43,6 +45,7 @@ class DrawOnImagePlugin: FlutterPlugin, MethodCallHandler {
                     }
                 }
             }
+            TARGET_PATH_NAME -> result.success(PathUtils.getDataDirectory(appContext))
             else -> result.notImplemented()
         }
     }

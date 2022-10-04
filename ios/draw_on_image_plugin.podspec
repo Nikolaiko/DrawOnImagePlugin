@@ -1,6 +1,7 @@
 Pod::Spec.new do |s|
+  s.homepage = "https://github.com/Nikolaiko/DrawOnImagePlugin"
   s.name             = 'draw_on_image_plugin'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'Flutter plugin for drawing text on images.'
   s.description      = 'Flutter plugin for drawing text on images.'
   s.license          = { :file => '../LICENSE' }
