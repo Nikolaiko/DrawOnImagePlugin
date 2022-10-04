@@ -31,6 +31,8 @@ public class SwiftDrawOnImagePlugin: NSObject, FlutterPlugin {
             } else {
                 result(false)
             }
+        case getTargetDirectory:
+            result(fileHelper.getDocumentsDirectory())
         default:
             result(FlutterMethodNotImplemented)
         }

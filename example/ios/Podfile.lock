@@ -1,29 +1,22 @@
 PODS:
   - draw_on_image_plugin (1.0.0):
     - Flutter
-    - path_provider
   - Flutter (1.0.0)
-  - path_provider (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - draw_on_image_plugin (from `.symlinks/plugins/draw_on_image_plugin/ios`)
   - Flutter (from `Flutter`)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
 
 EXTERNAL SOURCES:
   draw_on_image_plugin:
     :path: ".symlinks/plugins/draw_on_image_plugin/ios"
   Flutter:
     :path: Flutter
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
 
 SPEC CHECKSUMS:
-  draw_on_image_plugin: faf94d90726fa4f0a11cab8248f154bbbe32833e
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  draw_on_image_plugin: a7d10dc567c3568f4d58d58f0440c81f1d3078f5
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

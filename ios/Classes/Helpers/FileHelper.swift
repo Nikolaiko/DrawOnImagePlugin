@@ -1,4 +1,13 @@
 struct FileHelper {
+
+    func getDocumentsDirectory() -> String {
+        let documentsDirectory = FileManager.default.urls(
+                    for: .documentDirectory,
+                    in: .userDomainMask
+        ).first
+        return documentsDirectory?.path ?? ""
+    }
+
     func saveImageToDocuments(image: UIImage) -> String? {
         guard let documentsDirectory =
                 FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil}
